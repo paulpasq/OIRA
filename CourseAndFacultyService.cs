@@ -44,7 +44,14 @@ namespace parser
             var faculties = content.Skip(1).Where(line => line.Length > 0).Select(line => MapLineToFaculty(line)).ToList();
             foreach (var faculty in faculties)
             {
-                _appDbContext.Add(faculty);
+                if (_appDbContext.Faculty.Find(faculty.Id) != null)
+                {
+
+                }
+                else
+                {
+                    _appDbContext.Add(faculty);
+                }
             }
             _appDbContext.SaveChanges();
             return faculties;
@@ -56,7 +63,14 @@ namespace parser
             var courseSections = content.Skip(1).Where(line => line.Length > 0).Select(line => MapLineToCourseSection(line)).ToList();
             foreach (var courseSection in courseSections)
             {
-                _appDbContext.Add(courseSection);
+                if(_appDbContext.CourseSections.Find(courseSection.CRN) != null)
+                {
+                    
+                }
+                else
+                {
+                    _appDbContext.Add(courseSection);
+                }
             }
             _appDbContext.SaveChanges();
             return courseSections;
